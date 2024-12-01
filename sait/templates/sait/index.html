@@ -1,0 +1,49 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'sait/css/main.css' %}">
+    <title>Главная</title>
+</head>
+<body>
+    {% if user.is_authenticated %}
+        <div class="nav">
+
+            <a href="{% url 'index' %}">{{ user.username }}</a>
+            <a href="{% url 'index' %}">Главная</a>
+            <a href="{% url 'make_stat' %}">Составить заявление</a>
+            <a href="{% url 'logout' %}">Выход</a>
+        </div>
+        <div class="content">
+            <h1>НарушениямНет</h1>
+            <div class="stat_list">
+                {% for i in stat %}
+                    <div class="stat">
+                        <p>id {{ i.unique_id }}</p>
+                        <p>Нарушитель: {{ i.imposter }}</p>
+                        <p>Описание заявления: {{ i.describe }}</p>
+                        <p>Статус: {{ i.status }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    {% else %}
+        <div class="nav">
+            <a href="{% url 'auth' %}">Вход</a>
+            <a href="{% url 'index' %}">Главная</a>
+            <a href="{% url 'reg' %}">Регистрация</a>
+        </div>
+        <div class="content">
+            <h1>НарушениямНет</h1>
+            <p class="descrbie">НарушениямНет сайт для подачи заявлений о нарушениях пользователями – это платформа, ориентированная на
+                обеспечение честного и безопасного взаимодействия внутри сообщества.</p>
+        </div>
+    {% endif %}
+
+</body>
+</html>
